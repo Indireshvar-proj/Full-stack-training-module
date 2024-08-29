@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Video.JS Hide Seek Bar in Video Player</title>
+
+   <!-- Importing Video.js CSS / JS using CDN URL -->
+   <link href="https://vjs.zencdn.net/7.19.2/video-js.css" rel="stylesheet" />
+   <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+</head>
+<body>
+   <video
+      id="vid"
+      class="video-js vjs-default-skin vjs-big-play-centered"
+      controls="true"
+      preload="true"
+      muted="true"
+      autoplay="true"
+      width=580
+      height=350
+      data-setup='{}'
+      >
+   <source
+      src=" https://www.tutorialspoint.com/videos/sample720.mp4"
+      type="video/mp4"
+   >
+   </video>
+   <script>
+      // Initializing the video player with video options
+      const player = videojs('vid');
+      if (document.getElementById("vid")) {
+  videojs("vid").ready(function() {
+    
+    var myPlayer = this;
+
+    //Set initial time to 0
+    var currentTime = 0;
+    
+    //This example allows users to seek backwards but not forwards.
+    //To disable all seeking replace the if statements from the next
+    //two functions with myPlayer.currentTime(currentTime);
+
+    myPlayer.on("seeking", function(event) {
+      if (currentTime < myPlayer.currentTime()) {
+        myPlayer.currentTime(currentTime);
+      }
+    });
+
+    myPlayer.on("seeked", function(event) {
+      if (currentTime < myPlayer.currentTime()) {
+        myPlayer.currentTime(currentTime);
+      }
+    });
+
+    setInterval(function() {
+      if (!myPlayer.paused()) {
+        currentTime = myPlayer.currentTime();
+      }
+    }, 1000);
+
+  });
+}
+      // Hide the progress control from the control bar
+      
+   </script>
+
+</body>
+</html>
